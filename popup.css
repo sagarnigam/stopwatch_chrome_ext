@@ -1,9 +1,10 @@
+
 body {
-  min-width: 200px;
+  min-width: 340px;
   min-height: 120px;
-  border-radius: 18px;
+  border: transparent 0px solid;
   font-family: 'Inter', Arial, sans-serif;
-  background: #181c20;
+  background: #23272f;
   margin: 0;
   display: flex;
   align-items: center;
@@ -11,12 +12,11 @@ body {
 }
 
 #stopwatch-container {
-  width: 100%;
+  width: 95%;
   text-align: center;
-  padding: 18px 0 10px 0;
+  padding: 10px 0 10px 0;
   background: #23272f;
-  border-radius: 28px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+  margin: 8px 16px 16px 16px;
 }
 
 #timers {
@@ -29,23 +29,30 @@ body {
 
 .timer {
   background: #181c20;
-  border-radius: 22px;
+  border-radius: 15px;
   box-shadow: 0 1px 6px rgba(0,0,0,0.18);
   padding: 12px 18px 10px 18px;
-  min-width: 140px;
+  min-width: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 10px;
 }
 
 .display {
-  font-size: 2em;
+  font-size: 2.8em;
   font-weight: 600;
   color: #f5f6fa;
   letter-spacing: 1.5px;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
   background: none;
   border: none;
+}
+
+/* Add spacing between time units */
+.time-unit {
+  display: inline-block;
+  padding: 0 6px;
 }
 
 .controls {
@@ -59,7 +66,7 @@ body {
   border: none;
   font-size: 1.3em;
   padding: 8px 13px;
-  border-radius: 50%;
+  border-radius: 10px;
   cursor: pointer;
   outline: none;
   line-height: 1;
@@ -99,7 +106,8 @@ body {
 }
 
 #add-timer {
-  margin-top: 8px;
+  display: inline-block;
+  margin: 0 auto;
   background: linear-gradient(135deg, #ffea00 60%, #ff9100 100%);
   color: #23272f;
   border: none;
@@ -112,4 +120,33 @@ body {
 }
 #add-timer:hover {
   background: linear-gradient(135deg, #ffd600 60%, #ff6d00 100%);
+} 
+
+.remove {
+  background: none;
+  border: none;
+  color: #ff1744;
+  font-size: 1.1em;
+  border-radius: 50%;
+  padding: 4px 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.remove:hover {
+  background: #ff1744;
+  color: #fff;
+}
+.remove img {
+  display: block;
+} 
+
+#no-timers-message {
+  color: #f5f6fa;
+  text-align: center;
+  font-size: 1.1em;
+  margin-top: 32px;
+  margin-bottom: 12px;
 } 
