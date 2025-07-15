@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const addTimerBtn = document.getElementById('add-timer');
 
   let timerCount = 0;
+  let addingTimer = false;
 
   function createTimer() {
     timerCount++;
@@ -12,6 +13,21 @@ document.addEventListener('DOMContentLoaded', function () {
     const timerDiv = document.createElement('div');
     timerDiv.className = 'timer';
     timerDiv.id = timerId;
+
+    // Timer name
+    const timerName = document.getElementById('timer-name-input').value.trim();
+    let nameDiv = null;
+    if (timerName) {
+      nameDiv = document.createElement('div');
+      nameDiv.className = 'timer-name';
+      nameDiv.textContent = timerName;
+      nameDiv.style.marginTop = '6px';
+      nameDiv.style.marginBottom = '6px';
+      nameDiv.style.fontWeight = '500';
+      nameDiv.style.fontSize = '1.08em';
+      nameDiv.style.color = '#ffe082';
+      timerDiv.appendChild(nameDiv);
+    }
 
     const display = document.createElement('div');
     display.className = 'display';
@@ -119,15 +135,40 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   addTimerBtn.addEventListener('click', function() {
+    const nameInput = document.getElementById('timer-name-input');
+    if (!addingTimer) {
+      // First click: show input and focus
+      nameInput.style.display = 'block';
+      nameInput.focus();
+      document.getElementById('no-timers-message').style.display = 'none';
+      addingTimer = true;
+      return;
+    }
+    // Second click: add timer
     createTimer();
     timersContainer.style.display = 'block';
     addTimerBtn.style.display = 'inline-block';
     document.getElementById('no-timers-message').style.display = 'none';
     addTimerBtn.style.margin = '';
     addTimerBtn.style.position = '';
+    nameInput.value = '';
+    nameInput.style.display = 'none';
+    addingTimer = false;
   });
 
+  document.getElementById('timer-name-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      addTimerBtn.click();
+    }
+  });
+
+  // On load, hide input
+  document.getElementById('timer-name-input').style.display = 'none';
+
   // Add the first timer by default
-  createTimer();
-  document.getElementById('no-timers-message').style.display = 'none';
+  document.getElementById('no-timers-message').style.display = 'block';
+  timersContainer.style.display = 'none';
+  addTimerBtn.style.display = 'block';
+  addTimerBtn.style.margin = '32px auto 0 auto';
+  addTimerBtn.style.position = 'relative';
 });
