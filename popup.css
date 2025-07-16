@@ -187,3 +187,7 @@ body {
 .nav-btn, #add-stopwatch, .controls button, nav {
   font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif !important;
 } 
+
+#stopwatch-name-input, .stopwatch-name {
+  font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif !important;
+} 
