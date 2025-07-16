@@ -1,9 +1,9 @@
 
 body {
   min-width: 340px;
-  min-height: 140px;
+  min-height: 120px;
   border: #23272f 1px solid;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif;
   background: #23272f;
   margin: 0;
   display: flex;
@@ -182,4 +182,8 @@ body {
   align-self: center;
   border-radius: 2px;
   margin: 0 6px;
+} 
+
+.nav-btn, #add-stopwatch, .controls button, nav {
+  font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif !important;
 } 
