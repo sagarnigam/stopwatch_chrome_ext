@@ -29,6 +29,7 @@ body {
   align-items: center;
   margin-left: 5px;
   margin-right: 5px;
+  margin-bottom: 0;
 }
 
 .stopwatch {
@@ -128,7 +129,7 @@ body {
 }
 .add-action-btn {
   display: block;
-  margin: 10px auto;
+  margin: 10px auto 0 auto;
   background: #ffea00;
   color: #23272f;
   border: none;
@@ -236,8 +237,11 @@ body {
   padding: 10px 6px;
   font-size: 1.1em;
 }
+#timer-minutes-input {
+  margin: 0 6px 0 0;
+}
 #timer-seconds-input {
-  margin: 10px auto 12px auto;
+  margin: 0;
 }
 #no-stopwatches-message, #no-timers-message {
   display: none;
@@ -294,3 +298,11 @@ body {
 #timer-container, #timers, #timer-minutes-input, #timer-seconds-input, .display, .controls button, .add-action-btn {
   font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif !important;
 } 
+
+.timer-input-row {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

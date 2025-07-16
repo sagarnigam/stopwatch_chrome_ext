@@ -71,15 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
   // Timer logic
   let addingTimer = false;
   addTimerBtn.addEventListener('click', function() {
-    if (!addingTimer) {
-      timerMinutesInput.style.display = 'inline-block';
-      timerSecondsInput.style.display = 'inline-block';
-      timerMinutesInput.focus();
-      noTimersMessage.style.display = 'none';
-      addingTimer = true;
-      return;
-    }
-    // Second click: add timer
+    timerMinutesInput.style.display = 'inline-block';
+    timerSecondsInput.style.display = 'inline-block';
+    timerMinutesInput.focus();
+    noTimersMessage.style.display = 'none';
+  });
+  function tryCreateTimer() {
     let minutes = parseInt(timerMinutesInput.value, 10) || 0;
     let seconds = parseInt(timerSecondsInput.value, 10) || 0;
     if (minutes === 0 && seconds === 0) {
@@ -88,27 +85,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     createTimer(minutes, seconds);
     timersContainer.style.display = 'block';
-    addTimerBtn.style.display = 'inline-block';
     noTimersMessage.style.display = 'none';
-    addTimerBtn.style.margin = '';
-    addTimerBtn.style.position = '';
     timerMinutesInput.value = '';
     timerSecondsInput.value = '';
     timerMinutesInput.style.display = 'none';
     timerSecondsInput.style.display = 'none';
-    addingTimer = false;
-  });
+  }
   timerMinutesInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
-      addTimerBtn.click();
+      tryCreateTimer();
     }
   });
   timerSecondsInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
-      addTimerBtn.click();
+      tryCreateTimer();
     }
   });
-  // On load, hide timer inputs
+  // On load, hide timer inputs and create button
   timerMinutesInput.style.display = 'none';
   timerSecondsInput.style.display = 'none';
   noTimersMessage.style.display = 'block';

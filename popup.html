@@ -17,8 +17,10 @@
     <div id="timer-container">
       <div id="timers"></div>
       <div id="no-timers-message">No timers yet. Click below to add one!</div>
-      <input id="timer-minutes-input" type="number" min="0" max="99" placeholder="Minutes" />
-      <input id="timer-seconds-input" type="number" min="0" max="59" placeholder="Seconds" />
+      <div class="timer-input-row">
+        <input id="timer-minutes-input" type="text" placeholder="Minutes" />
+        <input id="timer-seconds-input" type="text" placeholder="Seconds" />
+      </div>
       <button id="add-timer" class="add-action-btn" title="Add Timer" aria-label="Add Timer">New Timer</button>
     </div>
     <nav id="popup-nav">
