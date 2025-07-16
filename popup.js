@@ -85,14 +85,50 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function startStopwatch() {
-      startTime = Date.now() - elapsedTime;
-      stopwatchInterval = setInterval(function () {
-        elapsedTime = Date.now() - startTime;
-        updateDisplay(elapsedTime);
-      }, 50);
+      // Show 3-second countdown overlay
+      let countdown = 3;
+      const countdownOverlay = document.createElement('div');
+      countdownOverlay.className = 'countdown-overlay';
+      countdownOverlay.textContent = countdown;
+      countdownOverlay.style.position = 'absolute';
+      countdownOverlay.style.top = '50%';
+      countdownOverlay.style.left = '50%';
+      countdownOverlay.style.transform = 'translate(-50%, -50%)';
+      countdownOverlay.style.fontSize = '2.5em';
+      countdownOverlay.style.fontWeight = 'bold';
+      countdownOverlay.style.color = '#ffe082';
+      countdownOverlay.style.background = 'rgba(35,39,47,0.85)';
+      countdownOverlay.style.padding = '0.2em 1.2em';
+      countdownOverlay.style.borderRadius = '18px';
+      countdownOverlay.style.zIndex = '10';
+      countdownOverlay.style.pointerEvents = 'none';
+      countdownOverlay.style.userSelect = 'none';
+      countdownOverlay.style.transition = 'opacity 0.2s';
+      stopwatchDiv.style.position = 'relative';
+      stopwatchDiv.appendChild(countdownOverlay);
+      display.style.filter = 'blur(3px)';
       startBtn.disabled = true;
-      stopBtn.disabled = false;
-      resetBtn.disabled = false;
+      stopBtn.disabled = true;
+      resetBtn.disabled = true;
+      let countdownInterval = setInterval(() => {
+        countdown--;
+        if (countdown > 0) {
+          countdownOverlay.textContent = countdown;
+        } else {
+          clearInterval(countdownInterval);
+          stopwatchDiv.removeChild(countdownOverlay);
+          display.style.filter = '';
+          // Now start the stopwatch
+          startTime = Date.now() - elapsedTime;
+          stopwatchInterval = setInterval(function () {
+            elapsedTime = Date.now() - startTime;
+            updateDisplay(elapsedTime);
+          }, 50);
+          startBtn.disabled = true;
+          stopBtn.disabled = false;
+          resetBtn.disabled = false;
+        }
+      }, 1000);
     }
 
     function stopStopwatch() {
@@ -134,8 +170,51 @@ document.addEventListener('DOMContentLoaded', function () {
     addStopwatchBtn.style.display = 'inline-block';
   }
 
+  function updateAddStopwatchState() {
+    if (stopwatchesContainer.children.length >= 3) {
+      addStopwatchBtn.disabled = true;
+      document.getElementById('stopwatch-name-input').disabled = true;
+      let limitMsg = document.getElementById('stopwatch-limit-message');
+      if (!limitMsg) {
+        limitMsg = document.createElement('div');
+        limitMsg.id = 'stopwatch-limit-message';
+        limitMsg.textContent = 'Maximum 3 stopwatches allowed.';
+        limitMsg.style.color = '#ff1744';
+        limitMsg.style.textAlign = 'center';
+        limitMsg.style.margin = '8px 0 0 0';
+        addStopwatchBtn.parentNode.insertBefore(limitMsg, addStopwatchBtn.nextSibling);
+      }
+    } else {
+      addStopwatchBtn.disabled = false;
+      document.getElementById('stopwatch-name-input').disabled = false;
+      const limitMsg = document.getElementById('stopwatch-limit-message');
+      if (limitMsg) limitMsg.remove();
+    }
+  }
+
+  function showLimitMessage() {
+    let limitMsg = document.getElementById('stopwatch-limit-message');
+    if (!limitMsg) {
+      limitMsg = document.createElement('div');
+      limitMsg.id = 'stopwatch-limit-message';
+      limitMsg.textContent = 'Maximum 3 stopwatches allowed.';
+      limitMsg.style.color = '#ff1744';
+      limitMsg.style.textAlign = 'center';
+      limitMsg.style.margin = '8px 0 0 0';
+      addStopwatchBtn.parentNode.insertBefore(limitMsg, addStopwatchBtn.nextSibling);
+    }
+    limitMsg.style.display = 'block';
+    setTimeout(() => {
+      if (limitMsg) limitMsg.style.display = 'none';
+    }, 2000);
+  }
+
   addStopwatchBtn.addEventListener('click', function() {
     const nameInput = document.getElementById('stopwatch-name-input');
+    if (stopwatchesContainer.children.length >= 3) {
+      showLimitMessage();
+      return;
+    }
     if (!addingStopwatch) {
       // First click: show input and focus
       nameInput.style.display = 'block';
@@ -171,4 +250,5 @@ document.addEventListener('DOMContentLoaded', function () {
   addStopwatchBtn.style.display = 'block';
   addStopwatchBtn.style.margin = '32px auto 0 auto';
   addStopwatchBtn.style.position = 'relative';
+  updateAddStopwatchState();
 });
