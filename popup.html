@@ -6,11 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <div id="stopwatch-container">
-    <div id="stopwatches"></div>
-    <div id="no-stopwatches-message" style="display:none;">No stopwatches yet. Click below to add one!</div>
-    <input id="stopwatch-name-input" type="text" placeholder="Stopwatch name (optional)" style="display:none; margin: 10px auto 12px auto; width: 80%; max-width: 220px; text-align:center; border-radius: 8px; border: 1px solid #444; background: #23272f; color: #f5f6fa; padding: 14px 10px; font-size: 1.1em;" />
-    <button id="add-stopwatch" title="Add Stopwatch" aria-label="Add stopwatch">New Stopwatch</button>
+  <div class="ext-container">
+    <div id="stopwatch-container">
+      <div id="stopwatches"></div>
+      <div id="no-stopwatches-message" style="display:none;">No stopwatches yet. Click below to add one!</div>
+      <input id="stopwatch-name-input" type="text" placeholder="Stopwatch name (optional)" style="display:none; margin: 10px auto 12px auto; width: 80%; max-width: 220px; text-align:center; border-radius: 8px; border: 1px solid #444; background: #23272f; color: #f5f6fa; padding: 14px 10px; font-size: 1.1em;" />
+      <button id="add-stopwatch" title="Add Stopwatch" aria-label="Add Stopwatch">New Stopwatch</button>
+    </div>
+    <nav id="popup-nav" style="width:100%; display:flex; justify-content:center; gap:18px; margin-top:18px; padding-bottom:6px;">
+      <button id="nav-stopwatches" class="nav-btn" aria-label="Stopwatches">Stopwatches</button>
+      <div class="nav-divider"></div>
+      <button id="nav-timers" class="nav-btn" aria-label="Timers">Timers</button>
+    </nav>
   </div>
   <script src="popup.js"></script>
 </body>

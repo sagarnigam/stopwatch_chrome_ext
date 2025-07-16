@@ -9,14 +9,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 5px;
+  padding: 5px;
 }
 
 #stopwatch-container {
-  width: 95%;
+  width: 100%;
   text-align: center;
   background: #23272f;
-  margin: 8px 16px 16px 16px;
+  margin: 16px;
 }
 
 #stopwatches {
@@ -109,7 +109,7 @@ body {
 #add-stopwatch {
   display: inline-block;
   margin: 10px auto;
-  background: linear-gradient(135deg, #ffea00 60%, #ff9100 100%);
+  background:  #ffea00;
   color: #23272f;
   border: none;
   border-radius: 50px;
@@ -120,7 +120,7 @@ body {
   transition: background 0.15s, color 0.15s;
 }
 #add-stopwatch:hover {
-  background: linear-gradient(135deg, #ffd600 60%, #ff6d00 100%);
+  background:  #ffd600;
 } 
 
 .remove {
@@ -150,4 +150,36 @@ body {
   font-size: 1.1em;
   margin-top: 32px;
   margin-bottom: 12px;
+} 
+
+.nav-btn {
+  background: #23272f;
+  color: #ffe082;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1em;
+  font-weight: 700;
+  padding: 8px 22px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  margin: 0 2px;
+}
+.nav-btn.active, .nav-btn:focus {
+  background: #181c20;
+  color: #ffe082;
+  font-weight: 900;
+}
+.nav-btn:hover {
+  background: #181c20;
+  color: #fffde7;
+} 
+
+.nav-divider {
+  width: 2px;
+  height: 28px;
+  background: #444;
+  align-self: center;
+  border-radius: 2px;
+  margin: 0 6px;
 } 
