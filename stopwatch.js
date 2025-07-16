@@ -15,11 +15,6 @@ export function createStopwatch() {
   let nameDiv = null;
   if (stopwatchName) {
     nameDiv = createElement('div', { className: 'stopwatch-name', textContent: stopwatchName });
-    nameDiv.style.marginTop = '6px';
-    nameDiv.style.marginBottom = '6px';
-    nameDiv.style.fontWeight = '500';
-    nameDiv.style.fontSize = '1.08em';
-    nameDiv.style.color = '#ffe082';
     stopwatchDiv.appendChild(nameDiv);
   }
 
@@ -68,23 +63,9 @@ export function createStopwatch() {
     let countdown = 3;
     const countdownOverlay = createElement('div', { className: 'countdown-overlay' });
     countdownOverlay.textContent = countdown;
-    countdownOverlay.style.position = 'absolute';
-    countdownOverlay.style.top = '50%';
-    countdownOverlay.style.left = '50%';
-    countdownOverlay.style.transform = 'translate(-50%, -50%)';
-    countdownOverlay.style.fontSize = '2.5em';
-    countdownOverlay.style.fontWeight = 'bold';
-    countdownOverlay.style.color = '#ffe082';
-    countdownOverlay.style.background = 'rgba(35,39,47,0.85)';
-    countdownOverlay.style.padding = '0.2em 1.2em';
-    countdownOverlay.style.borderRadius = '18px';
-    countdownOverlay.style.zIndex = '10';
-    countdownOverlay.style.pointerEvents = 'none';
-    countdownOverlay.style.userSelect = 'none';
-    countdownOverlay.style.transition = 'opacity 0.2s';
     stopwatchDiv.style.position = 'relative';
     stopwatchDiv.appendChild(countdownOverlay);
-    display.style.filter = 'blur(3px)';
+    display.classList.add('blurred');
     startBtn.disabled = true;
     stopBtn.disabled = true;
     resetBtn.disabled = true;
@@ -95,7 +76,7 @@ export function createStopwatch() {
       } else {
         clearInterval(countdownInterval);
         stopwatchDiv.removeChild(countdownOverlay);
-        display.style.filter = '';
+        display.classList.remove('blurred');
         // Now start the stopwatch
         startTime = Date.now() - elapsedTime;
         stopwatchInterval = setInterval(function () {

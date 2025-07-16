@@ -10,9 +10,7 @@ export function updateAddStopwatchState() {
       limitMsg = document.createElement('div');
       limitMsg.id = 'stopwatch-limit-message';
       limitMsg.textContent = 'Maximum 3 stopwatches allowed.';
-      limitMsg.style.color = '#ff1744';
-      limitMsg.style.textAlign = 'center';
-      limitMsg.style.margin = '8px 0 0 0';
+      limitMsg.className = 'limit-message';
       addStopwatchBtn.parentNode.insertBefore(limitMsg, addStopwatchBtn.nextSibling);
     }
   } else {
@@ -29,9 +27,7 @@ export function showLimitMessage() {
     limitMsg = document.createElement('div');
     limitMsg.id = 'stopwatch-limit-message';
     limitMsg.textContent = 'Maximum 3 stopwatches allowed.';
-    limitMsg.style.color = '#ff1744';
-    limitMsg.style.textAlign = 'center';
-    limitMsg.style.margin = '8px 0 0 0';
+    limitMsg.className = 'limit-message';
     addStopwatchBtn.parentNode.insertBefore(limitMsg, addStopwatchBtn.nextSibling);
   }
   limitMsg.style.display = 'block';
