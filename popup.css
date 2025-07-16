@@ -19,7 +19,7 @@ body {
   margin: 8px 16px 16px 16px;
 }
 
-#timers {
+#stopwatches {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -27,7 +27,7 @@ body {
   margin-bottom: 10px;
 }
 
-.timer {
+.stopwatch {
   background: #181c20;
   border-radius: 15px;
   box-shadow: 0 1px 6px rgba(0,0,0,0.18);
@@ -105,7 +105,7 @@ body {
   box-shadow: none;
 }
 
-#add-timer {
+#add-stopwatch {
   display: inline-block;
   margin: 0 auto;
   background: linear-gradient(135deg, #ffea00 60%, #ff9100 100%);
@@ -118,7 +118,7 @@ body {
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   transition: background 0.15s, color 0.15s;
 }
-#add-timer:hover {
+#add-stopwatch:hover {
   background: linear-gradient(135deg, #ffd600 60%, #ff6d00 100%);
 } 
 
@@ -143,7 +143,7 @@ body {
   display: block;
 } 
 
-#no-timers-message {
+#no-stopwatches-message {
   color: #f5f6fa;
   text-align: center;
   font-size: 1.1em;

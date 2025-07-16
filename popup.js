@@ -1,32 +1,32 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const timersContainer = document.getElementById('timers');
-  const addTimerBtn = document.getElementById('add-timer');
+  const stopwatchesContainer = document.getElementById('stopwatches');
+  const addStopwatchBtn = document.getElementById('add-stopwatch');
 
-  let timerCount = 0;
-  let addingTimer = false;
+  let stopwatchCount = 0;
+  let addingStopwatch = false;
 
-  function createTimer() {
-    timerCount++;
-    const timerId = `timer-${timerCount}`;
+  function createStopwatch() {
+    stopwatchCount++;
+    const stopwatchId = `stopwatch-${stopwatchCount}`;
 
-    // Timer elements
-    const timerDiv = document.createElement('div');
-    timerDiv.className = 'timer';
-    timerDiv.id = timerId;
+    // Stopwatch elements
+    const stopwatchDiv = document.createElement('div');
+    stopwatchDiv.className = 'stopwatch';
+    stopwatchDiv.id = stopwatchId;
 
-    // Timer name
-    const timerName = document.getElementById('timer-name-input').value.trim();
+    // Stopwatch name
+    const stopwatchName = document.getElementById('stopwatch-name-input').value.trim();
     let nameDiv = null;
-    if (timerName) {
+    if (stopwatchName) {
       nameDiv = document.createElement('div');
-      nameDiv.className = 'timer-name';
-      nameDiv.textContent = timerName;
+      nameDiv.className = 'stopwatch-name';
+      nameDiv.textContent = stopwatchName;
       nameDiv.style.marginTop = '6px';
       nameDiv.style.marginBottom = '6px';
       nameDiv.style.fontWeight = '500';
       nameDiv.style.fontSize = '1.08em';
       nameDiv.style.color = '#ffe082';
-      timerDiv.appendChild(nameDiv);
+      stopwatchDiv.appendChild(nameDiv);
     }
 
     const display = document.createElement('div');
@@ -68,14 +68,14 @@ document.addEventListener('DOMContentLoaded', function () {
     removeBtn.className = 'remove';
     controls.appendChild(removeBtn);
 
-    timerDiv.appendChild(display);
-    timerDiv.appendChild(controls);
-    timersContainer.appendChild(timerDiv);
+    stopwatchDiv.appendChild(display);
+    stopwatchDiv.appendChild(controls);
+    stopwatchesContainer.appendChild(stopwatchDiv);
 
-    // Timer logic
+    // Stopwatch logic
     let startTime = 0;
     let elapsedTime = 0;
-    let timerInterval;
+    let stopwatchInterval;
 
     function updateDisplay(time) {
       const milliseconds = Math.floor((time % 1000) / 10).toString().padStart(2, '0');
@@ -84,9 +84,9 @@ document.addEventListener('DOMContentLoaded', function () {
       display.innerHTML = `<span class='time-unit'>${minutes}</span>:<span class='time-unit'>${seconds}</span>:<span class='time-unit'>${milliseconds}</span>`;
     }
 
-    function startTimer() {
+    function startStopwatch() {
       startTime = Date.now() - elapsedTime;
-      timerInterval = setInterval(function () {
+      stopwatchInterval = setInterval(function () {
         elapsedTime = Date.now() - startTime;
         updateDisplay(elapsedTime);
       }, 50);
@@ -95,14 +95,14 @@ document.addEventListener('DOMContentLoaded', function () {
       resetBtn.disabled = false;
     }
 
-    function stopTimer() {
-      clearInterval(timerInterval);
+    function stopStopwatch() {
+      clearInterval(stopwatchInterval);
       startBtn.disabled = false;
       stopBtn.disabled = true;
     }
 
-    function resetTimer() {
-      clearInterval(timerInterval);
+    function resetStopwatch() {
+      clearInterval(stopwatchInterval);
       elapsedTime = 0;
       updateDisplay(elapsedTime);
       startBtn.disabled = false;
@@ -110,65 +110,65 @@ document.addEventListener('DOMContentLoaded', function () {
       resetBtn.disabled = true;
     }
 
-    startBtn.addEventListener('click', startTimer);
-    stopBtn.addEventListener('click', stopTimer);
-    resetBtn.addEventListener('click', resetTimer);
+    startBtn.addEventListener('click', startStopwatch);
+    stopBtn.addEventListener('click', stopStopwatch);
+    resetBtn.addEventListener('click', resetStopwatch);
 
-    function removeTimer() {
-      clearInterval(timerInterval);
-      timersContainer.removeChild(timerDiv);
-      if (timersContainer.children.length === 0) {
-        timersContainer.style.display = 'none';
-        addTimerBtn.style.display = 'block';
-        document.getElementById('no-timers-message').style.display = 'block';
-        addTimerBtn.style.margin = '32px auto 0 auto';
-        addTimerBtn.style.display = 'block';
-        addTimerBtn.style.position = 'relative';
+    function removeStopwatch() {
+      clearInterval(stopwatchInterval);
+      stopwatchesContainer.removeChild(stopwatchDiv);
+      if (stopwatchesContainer.children.length === 0) {
+        stopwatchesContainer.style.display = 'none';
+        addStopwatchBtn.style.display = 'block';
+        document.getElementById('no-stopwatches-message').style.display = 'block';
+        addStopwatchBtn.style.margin = '32px auto 0 auto';
+        addStopwatchBtn.style.display = 'block';
+        addStopwatchBtn.style.position = 'relative';
       }
     }
-    removeBtn.addEventListener('click', removeTimer);
+    removeBtn.addEventListener('click', removeStopwatch);
 
     // Initialize
     updateDisplay(0);
-    timersContainer.style.display = 'block';
-    addTimerBtn.style.display = 'inline-block';
+    stopwatchesContainer.style.display = 'block';
+    addStopwatchBtn.style.display = 'inline-block';
   }
 
-  addTimerBtn.addEventListener('click', function() {
-    const nameInput = document.getElementById('timer-name-input');
-    if (!addingTimer) {
+  addStopwatchBtn.addEventListener('click', function() {
+    const nameInput = document.getElementById('stopwatch-name-input');
+    if (!addingStopwatch) {
       // First click: show input and focus
       nameInput.style.display = 'block';
       nameInput.focus();
-      document.getElementById('no-timers-message').style.display = 'none';
-      addingTimer = true;
+      document.getElementById('no-stopwatches-message').style.display = 'none';
+      addingStopwatch = true;
       return;
     }
-    // Second click: add timer
-    createTimer();
-    timersContainer.style.display = 'block';
-    addTimerBtn.style.display = 'inline-block';
-    document.getElementById('no-timers-message').style.display = 'none';
-    addTimerBtn.style.margin = '';
-    addTimerBtn.style.position = '';
+    // Second click: add stopwatch
+    createStopwatch();
+    stopwatchesContainer.style.display = 'block';
+    addStopwatchBtn.style.display = 'inline-block';
+    document.getElementById('no-stopwatches-message').style.display = 'none';
+    addStopwatchBtn.style.margin = '';
+    addStopwatchBtn.style.position = '';
     nameInput.value = '';
     nameInput.style.display = 'none';
-    addingTimer = false;
+    addingStopwatch = false;
   });
 
-  document.getElementById('timer-name-input').addEventListener('keydown', function(e) {
+  document.getElementById('stopwatch-name-input').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
-      addTimerBtn.click();
+      addStopwatchBtn.click();
     }
   });
 
   // On load, hide input
-  document.getElementById('timer-name-input').style.display = 'none';
+  document.getElementById('stopwatch-name-input').style.display = 'none';
 
-  // Add the first timer by default
-  document.getElementById('no-timers-message').style.display = 'block';
-  timersContainer.style.display = 'none';
-  addTimerBtn.style.display = 'block';
-  addTimerBtn.style.margin = '32px auto 0 auto';
-  addTimerBtn.style.position = 'relative';
+  // Add the first stopwatch by default
+  document.getElementById('no-stopwatches-message').style.display = 'block';
+  stopwatchesContainer.style.display = 'none';
+  addStopwatchBtn.style.display = 'block';
+  addStopwatchBtn.style.margin = '32px auto 0 auto';
+  addStopwatchBtn.style.position = 'relative';
 });
