@@ -191,3 +191,65 @@ body {
 #stopwatch-name-input, .stopwatch-name {
   font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif !important;
 } 
+
+#timer-container {
+  width: 100%;
+  text-align: center;
+  background: #23272f;
+  margin: 16px;
+}
+
+#timers {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+#no-timers-message {
+  color: #f5f6fa;
+  text-align: center;
+  font-size: 1.1em;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+#timer-minutes-input, #timer-seconds-input {
+  font-family: 'Roboto Mono', 'Open Sans', Arial, sans-serif !important;
+  display: inline-block;
+  margin: 10px 4px 12px 4px;
+  width: 60px;
+  max-width: 80px;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #23272f;
+  color: #f5f6fa;
+  padding: 14px 10px;
+  font-size: 1.1em;
+  outline: none;
+  transition: border 0.15s, box-shadow 0.15s;
+}
+#timer-minutes-input:focus, #timer-seconds-input:focus {
+  border: 1.5px solid #ffe082;
+  box-shadow: 0 0 0 2px #ffe08233;
+}
+
+#add-timer {
+  display: inline-block;
+  margin: 10px auto;
+  background:  #ffea00;
+  color: #23272f;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1em;
+  padding: 8px 22px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: background 0.15s, color 0.15s;
+}
+#add-timer:hover {
+  background:  #ffd600;
+} 
