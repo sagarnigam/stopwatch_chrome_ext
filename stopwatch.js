@@ -24,14 +24,14 @@ export function createStopwatch() {
   const controls = createElement('div', { className: 'controls' });
 
   const startBtn = createElement('button', { className: 'start', attrs: { 'aria-label': 'Start', title: 'Start' } });
-  startBtn.innerHTML = '<img src="play_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Start" width="28" height="28">';
+  startBtn.innerHTML = '<img src="assets/play_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Start" width="28" height="28">';
 
   const stopBtn = createElement('button', { className: 'stop', attrs: { 'aria-label': 'Stop', title: 'Stop' } });
-  stopBtn.innerHTML = '<img src="pause_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Pause" width="28" height="28">';
+  stopBtn.innerHTML = '<img src="assets/pause_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Pause" width="28" height="28">';
   stopBtn.disabled = true;
 
   const resetBtn = createElement('button', { className: 'reset', attrs: { 'aria-label': 'Reset', title: 'Reset' } });
-  resetBtn.innerHTML = '<img src="refresh_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Reset" width="28" height="28">';
+  resetBtn.innerHTML = '<img src="assets/refresh_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Reset" width="28" height="28">';
   resetBtn.disabled = true;
 
   controls.appendChild(startBtn);
@@ -39,7 +39,7 @@ export function createStopwatch() {
   controls.appendChild(resetBtn);
 
   const removeBtn = createElement('button', { className: 'remove', attrs: { 'aria-label': 'Remove', title: 'Remove' } });
-  removeBtn.innerHTML = '<img src="cancel_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Remove" width="24" height="24">';
+  removeBtn.innerHTML = '<img src="assets/cancel_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png" alt="Remove" width="24" height="24">';
   controls.appendChild(removeBtn);
 
   stopwatchDiv.appendChild(display);

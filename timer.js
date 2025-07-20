@@ -14,7 +14,7 @@ export function createTimer(minutes, seconds) {
   const totalSeconds = minutes * 60 + seconds;
   let remaining = totalSeconds;
   let timerInterval = null;
-  let alarmAudio = new Audio("alarm.wav");
+  let alarmAudio = new Audio("assets/alarm.wav");
   alarmAudio.loop = true;
 
   // Create main timer container
@@ -34,7 +34,7 @@ export function createTimer(minutes, seconds) {
   // Helper to create a button
   function createButton(iconSrc, title, className, size) {
     const button = document.createElement("button");
-    button.innerHTML = `<img src="${iconSrc}" alt="${title}" width="${size}" height="${size}">`;
+    button.innerHTML = `<img src="assets/${iconSrc}" alt="${title}" width="${size}" height="${size}">`;
     button.title = title;
     button.setAttribute("aria-label", title);
     button.className = className;
