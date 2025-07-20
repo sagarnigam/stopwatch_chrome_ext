@@ -17,5 +17,11 @@
     "32": "time.png",
     "48": "time.png",
     "128": "time.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["alarm.wav"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
