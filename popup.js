@@ -12,18 +12,12 @@ import {
 } from "./ui.js";
 import { createStopwatch } from "./stopwatch.js";
 import { updateAddStopwatchState, showLimitMessage } from "./state.js";
-
-const navStopwatches = document.getElementById("nav-stopwatches");
-const navTimers = document.getElementById("nav-timers");
+import { initNavigation } from "./navigation.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   let addingStopwatch = false;
 
-  // Navigation logic
-  navStopwatches.addEventListener("click", showStopwatchSection);
-  navTimers.addEventListener("click", showTimerSection);
-  // Default to stopwatch section
-  showStopwatchSection();
+  initNavigation();
 
   addStopwatchBtn.addEventListener("click", function () {
     if (stopwatchesContainer.children.length >= 3) {
@@ -210,17 +204,3 @@ document.addEventListener("DOMContentLoaded", function () {
     noTimersMessage.style.display = "none";
   }
 });
-
-function showStopwatchSection() {
-  document.getElementById("stopwatch-container").style.display = "block";
-  timerContainer.style.display = "none";
-  navStopwatches.classList.add("active");
-  navTimers.classList.remove("active");
-}
-
-function showTimerSection() {
-  document.getElementById("stopwatch-container").style.display = "none";
-  timerContainer.style.display = "block";
-  navTimers.classList.add("active");
-  navStopwatches.classList.remove("active");
-}
