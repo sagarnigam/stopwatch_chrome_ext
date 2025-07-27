@@ -4,6 +4,7 @@
  */
 
 import { timersContainer, noTimersMessage, addTimerBtn } from "./ui.js";
+import { updateAddTimerState } from "./state.js";
 
 /**
  * Creates a new timer with all necessary UI elements and functionality
@@ -166,6 +167,7 @@ export function createTimer(minutes, seconds) {
     alarmAudio.currentTime = 0;
     timersContainer.removeChild(timerDiv);
     updateTimerContainerState();
+    updateAddTimerState();
   }
 
   function updateTimerContainerState() {
@@ -189,4 +191,5 @@ export function createTimer(minutes, seconds) {
   timersContainer.style.display = "block";
   addTimerBtn.style.display = "inline-block";
   noTimersMessage.style.display = "none";
+  updateAddTimerState();
 }

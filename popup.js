@@ -10,7 +10,7 @@ import {
   addTimerBtn,
 } from "./ui.js";
 import { createStopwatch } from "./stopwatch.js";
-import { updateAddStopwatchState, showLimitMessage } from "./state.js";
+import { updateAddStopwatchState, showLimitMessage, updateAddTimerState, showTimerLimitMessage } from "./state.js";
 import { initNavigation } from "./navigation.js";
 import { createTimer } from "./timer.js";
 
@@ -64,6 +64,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Timer logic
   
   addTimerBtn.addEventListener("click", function () {
+    if (timersContainer.children.length >= 3) {
+      showTimerLimitMessage();
+      return;
+    }
     timerMinutesInput.style.display = "inline-block";
     timerSecondsInput.style.display = "inline-block";
     timerMinutesInput.focus();
@@ -84,12 +88,15 @@ document.addEventListener("DOMContentLoaded", function () {
     timerSecondsInput.value = "";
     timerMinutesInput.style.display = "none";
     timerSecondsInput.style.display = "none";
+    updateAddTimerState();
   }
+
   timerMinutesInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       tryCreateTimer();
     }
   });
+  
   timerSecondsInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       tryCreateTimer();
@@ -100,4 +107,5 @@ document.addEventListener("DOMContentLoaded", function () {
   timerSecondsInput.style.display = "none";
   noTimersMessage.style.display = "block";
   timersContainer.style.display = "none";
+  updateAddTimerState();
 });
