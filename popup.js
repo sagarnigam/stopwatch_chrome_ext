@@ -9,15 +9,47 @@ import {
   timerSecondsInput,
   addTimerBtn,
 } from "./ui.js";
-import { createStopwatch } from "./stopwatch.js";
+import { createStopwatch, restoreStopwatch } from "./stopwatch.js";
 import { updateAddStopwatchState, showLimitMessage, updateAddTimerState, showTimerLimitMessage } from "./state.js";
 import { initNavigation } from "./navigation.js";
-import { createTimer } from "./timer.js";
+import { createTimer, restoreTimer } from "./timer.js";
+import { getStopwatchesState, getTimersState } from "./storage.js";
 
 document.addEventListener("DOMContentLoaded", function () {
   let addingStopwatch = false;
 
   initNavigation();
+
+  // Restore saved states
+  function restoreSavedStates() {
+    // Restore stopwatches
+    const savedStopwatches = getStopwatchesState();
+    savedStopwatches.forEach(stopwatchData => {
+      restoreStopwatch(stopwatchData);
+    });
+
+    // Restore timers
+    const savedTimers = getTimersState();
+    savedTimers.forEach(timerData => {
+      restoreTimer(timerData);
+    });
+
+    // Update UI state based on restored items
+    if (savedStopwatches.length > 0) {
+      stopwatchesContainer.style.display = 'block';
+      noStopwatchesMessage.style.display = 'none';
+      addStopwatchBtn.style.display = 'inline-block';
+    }
+
+    if (savedTimers.length > 0) {
+      timersContainer.style.display = 'block';
+      noTimersMessage.style.display = 'none';
+      addTimerBtn.style.display = 'inline-block';
+    }
+  }
+
+  // Load saved states on popup open
+  restoreSavedStates();
 
   addStopwatchBtn.addEventListener("click", function () {
     if (stopwatchesContainer.children.length >= 3) {
@@ -53,12 +85,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // On load, hide input
   nameInput.style.display = "none";
 
-  // Add the first stopwatch by default
-  noStopwatchesMessage.style.display = "block";
-  stopwatchesContainer.style.display = "none";
-  addStopwatchBtn.style.display = "block";
-  addStopwatchBtn.style.margin = "32px auto 0 auto";
-  addStopwatchBtn.style.position = "relative";
+  // Set up initial UI state (will be overridden if items are restored)
+  if (stopwatchesContainer.children.length === 0) {
+    noStopwatchesMessage.style.display = "block";
+    stopwatchesContainer.style.display = "none";
+    addStopwatchBtn.style.display = "block";
+    addStopwatchBtn.style.margin = "32px auto 0 auto";
+    addStopwatchBtn.style.position = "relative";
+  }
   updateAddStopwatchState();
 
   // Timer logic
@@ -105,7 +139,9 @@ document.addEventListener("DOMContentLoaded", function () {
   // On load, hide timer inputs and create button
   timerMinutesInput.style.display = "none";
   timerSecondsInput.style.display = "none";
-  noTimersMessage.style.display = "block";
-  timersContainer.style.display = "none";
+  if (timersContainer.children.length === 0) {
+    noTimersMessage.style.display = "block";
+    timersContainer.style.display = "none";
+  }
   updateAddTimerState();
 });

@@ -5,6 +5,7 @@
 
 import { timersContainer, noTimersMessage, addTimerBtn } from "./ui.js";
 import { updateAddTimerState } from "./state.js";
+import { saveTimerState, removeTimerFromStorage, updateTimerState } from "./storage.js";
 
 /**
  * Creates a new timer with all necessary UI elements and functionality
@@ -17,10 +18,24 @@ export function createTimer(minutes, seconds) {
   let timerInterval = null;
   let alarmAudio = new Audio("assets/alarm.wav");
   alarmAudio.loop = true;
+  
+  // Generate unique timer ID
+  const timerId = `timer-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  
+  // Save initial timer state
+  const timerData = {
+    id: timerId,
+    totalSeconds: totalSeconds,
+    remaining: remaining,
+    isRunning: false,
+    isCompleted: false
+  };
+  saveTimerState(timerData);
 
   // Create main timer container
   const timerDiv = document.createElement("div");
   timerDiv.className = "stopwatch";
+  timerDiv.id = timerId;
 
   // Create display element
   const display = document.createElement("div");
@@ -113,6 +128,12 @@ export function createTimer(minutes, seconds) {
       if (remaining > 0) {
         remaining--;
         updateDisplay();
+        // Update storage with current state
+        updateTimerState(timerId, {
+          remaining: remaining,
+          isRunning: true,
+          isCompleted: false
+        });
       }
       if (remaining === 0) {
         timerComplete();
@@ -125,6 +146,12 @@ export function createTimer(minutes, seconds) {
     timerInterval = null;
     startBtn.disabled = false;
     pauseBtn.disabled = true;
+    // Update storage with paused state
+    updateTimerState(timerId, {
+      remaining: remaining,
+      isRunning: false,
+      isCompleted: false
+    });
   }
 
   function resetTimer() {
@@ -137,6 +164,12 @@ export function createTimer(minutes, seconds) {
     resetBtn.disabled = true;
     alarmAudio.pause();
     alarmAudio.currentTime = 0;
+    // Update storage with reset state
+    updateTimerState(timerId, {
+      remaining: remaining,
+      isRunning: false,
+      isCompleted: false
+    });
   }
 
   function timerComplete() {
@@ -145,6 +178,12 @@ export function createTimer(minutes, seconds) {
     startBtn.disabled = true;
     pauseBtn.disabled = true;
     resetBtn.disabled = false;
+    // Update storage with completed state
+    updateTimerState(timerId, {
+      remaining: 0,
+      isRunning: false,
+      isCompleted: true
+    });
     playAlarm();
   }
 
@@ -165,6 +204,7 @@ export function createTimer(minutes, seconds) {
     timerInterval = null;
     alarmAudio.pause();
     alarmAudio.currentTime = 0;
+    removeTimerFromStorage(timerId);
     timersContainer.removeChild(timerDiv);
     updateTimerContainerState();
     updateAddTimerState();
@@ -188,6 +228,235 @@ export function createTimer(minutes, seconds) {
 
   // Initialize display
   updateDisplay();
+  timersContainer.style.display = "block";
+  addTimerBtn.style.display = "inline-block";
+  noTimersMessage.style.display = "none";
+  updateAddTimerState();
+}
+
+/**
+ * Restore timer from saved state
+ * @param {Object} timerData - The saved timer data
+ */
+export function restoreTimer(timerData) {
+  const totalSeconds = timerData.totalSeconds;
+  let remaining = timerData.remaining;
+  let timerInterval = null;
+  let alarmAudio = new Audio("assets/alarm.wav");
+  alarmAudio.loop = true;
+  
+  const timerId = timerData.id;
+  const isRunning = timerData.isRunning || false;
+  const isCompleted = timerData.isCompleted || false;
+
+  // Create main timer container
+  const timerDiv = document.createElement("div");
+  timerDiv.className = "stopwatch";
+  timerDiv.id = timerId;
+
+  // Create display element
+  const display = document.createElement("div");
+  display.className = "display";
+  display.setAttribute("role", "timer");
+  display.setAttribute("aria-live", "polite");
+
+  // Create controls container
+  const controls = document.createElement("div");
+  controls.className = "controls";
+
+  // Helper to create a button
+  function createButton(iconSrc, title, className, size) {
+    const button = document.createElement("button");
+    button.innerHTML = `<img src="assets/${iconSrc}" alt="${title}" width="${size}" height="${size}">`;
+    button.title = title;
+    button.setAttribute("aria-label", title);
+    button.className = className;
+    return button;
+  }
+
+  // Create control buttons
+  const startBtn = createButton(
+    "play_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png",
+    "Start",
+    "start",
+    28
+  );
+  const pauseBtn = createButton(
+    "pause_circle_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png",
+    "Pause",
+    "stop",
+    28
+  );
+  pauseBtn.disabled = true;
+  const resetBtn = createButton(
+    "refresh_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png",
+    "Reset",
+    "reset",
+    28
+  );
+  resetBtn.disabled = true;
+  const removeBtn = createButton(
+    "cancel_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.png",
+    "Remove",
+    "remove",
+    24
+  );
+
+  // Assemble controls
+  controls.appendChild(startBtn);
+  controls.appendChild(pauseBtn);
+  controls.appendChild(resetBtn);
+  controls.appendChild(removeBtn);
+
+  // Assemble timer
+  timerDiv.appendChild(display);
+  timerDiv.appendChild(controls);
+  timersContainer.appendChild(timerDiv);
+
+  // Update the timer display
+  function updateDisplay() {
+    const m = Math.floor(remaining / 60)
+      .toString()
+      .padStart(2, "0");
+    const s = (remaining % 60).toString().padStart(2, "0");
+    display.innerHTML = `<span class='time-unit'>${m}</span>:<span class='time-unit'>${s}</span>`;
+  }
+
+  // Timer control logic
+  function startTimer() {
+    if (remaining <= 0 || timerInterval) return;
+
+    // Unlock audio playback (only once)
+    alarmAudio
+      .play()
+      .then(() => {
+        alarmAudio.pause();
+        alarmAudio.currentTime = 0;
+      })
+      .catch((err) => {
+        console.warn("Audio unlock failed:", err);
+      });
+
+    startBtn.disabled = true;
+    pauseBtn.disabled = false;
+    resetBtn.disabled = false;
+
+    timerInterval = setInterval(() => {
+      if (remaining > 0) {
+        remaining--;
+        updateDisplay();
+        // Update storage with current state
+        updateTimerState(timerId, {
+          remaining: remaining,
+          isRunning: true,
+          isCompleted: false
+        });
+      }
+      if (remaining === 0) {
+        timerComplete();
+      }
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    // Update storage with paused state
+    updateTimerState(timerId, {
+      remaining: remaining,
+      isRunning: false,
+      isCompleted: false
+    });
+  }
+
+  function resetTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    remaining = totalSeconds;
+    updateDisplay();
+    startBtn.disabled = false;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = true;
+    alarmAudio.pause();
+    alarmAudio.currentTime = 0;
+    // Update storage with reset state
+    updateTimerState(timerId, {
+      remaining: remaining,
+      isRunning: false,
+      isCompleted: false
+    });
+  }
+
+  function timerComplete() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    startBtn.disabled = true;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = false;
+    // Update storage with completed state
+    updateTimerState(timerId, {
+      remaining: 0,
+      isRunning: false,
+      isCompleted: true
+    });
+    playAlarm();
+  }
+
+  function playAlarm() {
+    alarmAudio.currentTime = 0;
+    alarmAudio.play().catch((err) => {
+      console.warn("Alarm playback blocked:", err);
+    });
+
+    setTimeout(() => {
+      alarmAudio.pause();
+      alarmAudio.currentTime = 0;
+    }, 5000);
+  }
+
+  function removeTimer() {
+    clearInterval(timerInterval);
+    timerInterval = null;
+    alarmAudio.pause();
+    alarmAudio.currentTime = 0;
+    removeTimerFromStorage(timerId);
+    timersContainer.removeChild(timerDiv);
+    updateTimerContainerState();
+    updateAddTimerState();
+  }
+
+  function updateTimerContainerState() {
+    if (timersContainer.children.length === 0) {
+      timersContainer.style.display = "none";
+      addTimerBtn.style.display = "block";
+      noTimersMessage.style.display = "block";
+      addTimerBtn.style.margin = "32px auto 0 auto";
+      addTimerBtn.style.position = "relative";
+    }
+  }
+
+  // Attach event listeners
+  startBtn.addEventListener("click", startTimer);
+  pauseBtn.addEventListener("click", pauseTimer);
+  resetBtn.addEventListener("click", resetTimer);
+  removeBtn.addEventListener("click", removeTimer);
+
+  // Initialize with saved state
+  updateDisplay();
+  if (isCompleted) {
+    // If timer was completed, show completed state
+    startBtn.disabled = true;
+    pauseBtn.disabled = true;
+    resetBtn.disabled = false;
+  } else if (isRunning) {
+    // If timer was running, start it again
+    startTimer();
+  } else if (remaining < totalSeconds) {
+    // If timer was paused with some time remaining, enable reset button
+    resetBtn.disabled = false;
+  }
   timersContainer.style.display = "block";
   addTimerBtn.style.display = "inline-block";
   noTimersMessage.style.display = "none";
