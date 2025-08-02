@@ -3,10 +3,12 @@ import {
   addStopwatchBtn,
   nameInput,
   noStopwatchesMessage,
+  stopwatchEnterMessage,
   timersContainer,
   noTimersMessage,
   timerMinutesInput,
   timerSecondsInput,
+  timerEnterMessage,
   addTimerBtn,
 } from "./ui.js";
 import { createStopwatch, restoreStopwatch } from "./stopwatch.js";
@@ -61,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
       nameInput.style.display = "block";
       nameInput.focus();
       noStopwatchesMessage.style.display = "none";
+      stopwatchEnterMessage.style.display = "block";
       addingStopwatch = true;
       return;
     }
@@ -69,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     stopwatchesContainer.style.display = "block";
     addStopwatchBtn.style.display = "inline-block";
     noStopwatchesMessage.style.display = "none";
+    stopwatchEnterMessage.style.display = "none";
     addStopwatchBtn.style.margin = "";
     addStopwatchBtn.style.position = "";
     nameInput.value = "";
@@ -106,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
     timerSecondsInput.style.display = "inline-block";
     timerMinutesInput.focus();
     noTimersMessage.style.display = "none";
+    timerEnterMessage.style.display = "block";
   });
 
   function tryCreateTimer() {
@@ -118,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createTimer(minutes, seconds);
     timersContainer.style.display = "block";
     noTimersMessage.style.display = "none";
+    timerEnterMessage.style.display = "none";
     timerMinutesInput.value = "";
     timerSecondsInput.value = "";
     timerMinutesInput.style.display = "none";

@@ -10,17 +10,19 @@
   <div class="ext-container">
     <div id="stopwatch-container">
       <div id="stopwatches"></div>
-      <div id="no-stopwatches-message">No stopwatches yet. Click below to add one!</div>
+      <div id="no-stopwatches-message">No stopwatches yet!</div>
       <input id="stopwatch-name-input" type="text" placeholder="Stopwatch name (optional)" />
+      <div id="stopwatch-enter-message" class="enter-message" style="display: none;">Press Enter to add stopwatch</div>
       <button id="add-stopwatch" class="add-action-btn" title="Add Stopwatch" aria-label="Add Stopwatch">New Stopwatch</button>
     </div>
     <div id="timer-container">
       <div id="timers"></div>
-      <div id="no-timers-message">No timers yet. Click below to add one!</div>
+      <div id="no-timers-message">No timers yet!</div>
       <div class="timer-input-row">
         <input id="timer-minutes-input" type="text" placeholder="Minutes" />
         <input id="timer-seconds-input" type="text" placeholder="Seconds" />
       </div>
+      <div id="timer-enter-message" class="enter-message" style="display: none;">Press Enter to add timer</div>
       <button id="add-timer" class="add-action-btn" title="Add Timer" aria-label="Add Timer">New Timer</button>
     </div>
     <nav id="popup-nav">

@@ -247,12 +247,27 @@ body {
 }
 #no-stopwatches-message, #no-timers-message {
   display: none;
-  color: #f5f6fa;
+  color: #8a8a8a;
+  font-size: 1.2em;
+  margin: 20px 0;
   text-align: center;
-  font-size: 1.1em;
-  margin-top: 32px;
-  margin-bottom: 12px;
 }
+
+.enter-message {
+  color: #00e676;
+  font-size: 0.85em;
+  margin: 8px 0;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.9;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 0.9; }
+}
+
 #popup-nav {
   width: 100%;
   display: flex;
